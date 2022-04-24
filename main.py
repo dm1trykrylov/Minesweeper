@@ -1,5 +1,7 @@
 from tkinter import *
 import settings
+import utils
+import cell
 
 root = Tk()
 root.configure(bg="black")
@@ -12,17 +14,19 @@ top_frame = Frame(
     root,
     bg='red',
     width=settings.WIDTH,
-    height=settings.HEIGHT
+    height=utils.height_prct(25)
 )
-top_frame.place(x=0,y=188)
+top_frame.place(x=0,y=0)
 
 left_frame = Frame(
     root,
     bg='blue',
-    width=settings.WIDTH,
-    height=settings.HEIGHT
+    width=utils.width_prct(25),
+    height=utils.height_prct(75)
 )
-top_frame.place(x=0,y=188)
+left_frame.place(x=0,y=utils.height_prct(25))
+
+
 
 #Run the window
 root.mainloop()

@@ -1,7 +1,7 @@
 from tkinter import *
+from cell import Cell
 import settings
 import utils
-import cell
 
 root = Tk()
 root.configure(bg="black")
@@ -12,20 +12,39 @@ root.title("Minesweeper")
 
 top_frame = Frame(
     root,
-    bg='red',
+    bg='black',
     width=settings.WIDTH,
     height=utils.height_prct(25)
 )
 top_frame.place(x=0,y=0)
 
+
 left_frame = Frame(
     root,
-    bg='blue',
+    bg='black',
     width=utils.width_prct(25),
     height=utils.height_prct(75)
 )
 left_frame.place(x=0,y=utils.height_prct(25))
 
+
+center_frame = Frame(
+    root,
+    bg='black',
+    width=utils.width_prct(25),
+    height=utils.height_prct(75)
+)
+center_frame.place(x=utils.height_prct(25), y=utils.height_prct(25))
+
+
+#generate field
+for row in range(settings.GRID_SIZE):
+    for col in range(settings.GRID_SIZE):
+        c = Cell()
+        c.create_btn_object(center_frame)
+        c.btn_object.grid(
+            column=col, row=row
+        )
 
 
 #Run the window

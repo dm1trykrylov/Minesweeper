@@ -10,5 +10,16 @@ class Cell:
             location,
             text='Text'
         )
+        btn.bind('<Button-1>', self.onLeftClick)
+        btn.bind('<Button-3>', self.onRightClick)
+        self.btn_object = btn
     
+    def onLeftClick(self, event):
+        print(event)
+        print('Left')
+
+    def onRightClick(self, event):
+        print(event)
+        print('Right')
+
 

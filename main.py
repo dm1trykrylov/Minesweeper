@@ -40,12 +40,13 @@ center_frame.place(x=utils.height_prct(25), y=utils.height_prct(25))
 #generate field
 for row in range(settings.GRID_SIZE):
     for col in range(settings.GRID_SIZE):
-        c = Cell()
+        c = Cell(col, row)
         c.create_btn_object(center_frame)
         c.btn_object.grid(
             column=col, row=row
         )
 
+Cell.generate_mines()
 
 #Run the window
 root.mainloop()

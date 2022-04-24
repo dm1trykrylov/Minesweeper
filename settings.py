@@ -1,2 +1,5 @@
 WIDTH = 1260
+
 HEIGHT = 720
+
+GRID_SIZE = 6

@@ -11,16 +11,16 @@ root.title("Minesweeper")
 top_frame = Frame(
     root,
     bg='red',
-    width=1440,
-    height=180
+    width=settings.WIDTH,
+    height=settings.HEIGHT
 )
 top_frame.place(x=0,y=188)
 
 left_frame = Frame(
     root,
     bg='blue',
-    width=1440,
-    height=180
+    width=settings.WIDTH,
+    height=settings.HEIGHT
 )
 top_frame.place(x=0,y=188)
 

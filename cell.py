@@ -1,4 +1,4 @@
-from tkinter import Button
+from tkinter import Button, Label
 import random
 import settings
 
@@ -10,6 +10,8 @@ class Cell:
         self.x = x
         self.y = y
         self.btn_object = None
+        self.counter_object = None
+        self.is_shown = False
 
         Cell.all.append(self)
     
@@ -17,17 +19,40 @@ class Cell:
         btn = Button(
             location,
             width=12,
-            height=4
+            height=4,
+            font=("", 10)
         )
         btn.bind('<Button-1>', self.onLeftClick) # Left Button Click
         btn.bind('<Button-3>', self.onRightClick) # Right Button Click
         self.btn_object = btn
+
+    @staticmethod
+    def create_cell_counter(self, location):
+        lbl = Label(
+            location,
+            bg='black',
+            fg='white',
+            width=12,
+            height=4,
+            text=f"Cells Left: {settings.CELLS_COUNT}",
+            font=("", 30)
+        )
+        self.counter_object = lbl
     
     def onLeftClick(self, event):
         if self.is_mine:
             self.show_mine()
         else:
+            if self.surrounding_mines_count == 0:
+                self.show_surrounding()
             self.show_cell()
+
+    def show_surrounding(self):
+        for cell in self.surrounding_cells:
+            if cell.is_shown == False:
+                cell.show_cell()
+                if(cell.surrounding_mines_count == 0):
+                    cell.show_surrounding()
 
     def show_mine(self):
         # A logic to show mine and interrupt the game
@@ -57,6 +82,7 @@ class Cell:
         return count
 
     def show_cell(self):
+        self.is_shown = True
         self.btn_object.configure(text=self.surrounding_mines_count)
 
     def onRightClick(self, event):

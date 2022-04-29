@@ -48,5 +48,10 @@ for row in range(settings.GRID_SIZE):
 
 Cell.generate_mines()
 
+Cell.create_cell_counter(left_frame)
+
+Cell.counter_object.place(
+    x=0, y=0
+)
 #Run the window
 root.mainloop()

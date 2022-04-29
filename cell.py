@@ -4,13 +4,14 @@ import settings
 
 class Cell:
     all = []
+    cell_count = settings.CELLS_COUNT
+    counter_object = None
 
     def __init__(self, x, y, is_mine = False):
         self.is_mine = is_mine
         self.x = x
         self.y = y
         self.btn_object = None
-        self.counter_object = None
         self.is_shown = False
 
         Cell.all.append(self)
@@ -27,17 +28,17 @@ class Cell:
         self.btn_object = btn
 
     @staticmethod
-    def create_cell_counter(self, location):
+    def create_cell_counter(location):
         lbl = Label(
             location,
             bg='black',
             fg='white',
             width=12,
             height=4,
-            text=f"Cells Left: {settings.CELLS_COUNT}",
-            font=("", 30)
+            text=f"Cells Left: {Cell.cell_count}",
+            font=("", 16)
         )
-        self.counter_object = lbl
+        Cell.counter_object = lbl
     
     def onLeftClick(self, event):
         if self.is_mine:
@@ -82,8 +83,12 @@ class Cell:
         return count
 
     def show_cell(self):
+        Cell.cell_count -= 1
         self.is_shown = True
         self.btn_object.configure(text=self.surrounding_mines_count)
+        if Cell.counter_object:
+            Cell.counter_object.configure(
+                text=f"Cells Left: {Cell.cell_count}")
 
     def onRightClick(self, event):
         print(event)

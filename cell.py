@@ -13,6 +13,7 @@ class Cell:
         self.y = y
         self.btn_object = None
         self.is_shown = False
+        self.is_marked = False
 
         Cell.all.append(self)
     
@@ -41,12 +42,15 @@ class Cell:
         Cell.counter_object = lbl
     
     def onLeftClick(self, event):
-        if self.is_mine:
-            self.show_mine()
+        if not self.is_marked:
+            if self.is_mine:
+                self.show_mine()
+            else:
+                if self.surrounding_mines_count == 0:
+                    self.show_surrounding()
+                self.show_cell()
         else:
-            if self.surrounding_mines_count == 0:
-                self.show_surrounding()
-            self.show_cell()
+            pass
 
     def show_surrounding(self):
         for cell in self.surrounding_cells:
@@ -91,8 +95,18 @@ class Cell:
                 text=f"Cells Left: {Cell.cell_count}")
 
     def onRightClick(self, event):
-        print(event)
-        print('Right')
+        if not self.is_marked:
+            self.btn_object.configure(
+                bg='orange'
+            )
+            self.btn_object.configure(state='disabled')
+            self.is_marked = True
+        else:            
+            self.btn_object.configure(
+                bg='SystemButtonFace'
+            )
+            self.btn_object.configure(state='active')
+            self.is_marked = False
 
     @staticmethod
     def generate_mines():

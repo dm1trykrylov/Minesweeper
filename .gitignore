@@ -2,3 +2,6 @@ __pycache__/cell.cpython-38.pyc
 __pycache__/settings.cpython-38.pyc
 __pycache__/utils.cpython-38.pyc
 .vscode/launch.json
+build/
+dist/
+*.spec

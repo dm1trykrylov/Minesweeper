@@ -1,6 +1,9 @@
 from tkinter import Button, Label
 import random
 import settings
+import ctypes
+import sys
+import time
 
 class Cell:
     all = []
@@ -49,6 +52,10 @@ class Cell:
                 if self.surrounding_mines_count == 0:
                     self.show_surrounding()
                 self.show_cell()
+                if Cell.cell_count == settings.MINES_COUNT:
+                    ctypes.windll.user32.MessageBoxW(
+                        0, 'Congratulations! You won!', 'Game Over', 0)
+                    sys.exit()
         else:
             pass
 
@@ -59,10 +66,13 @@ class Cell:
                 if(cell.surrounding_mines_count == 0):
                     cell.show_surrounding()
 
-    def show_mine(self):
-        # A logic to show mine and interrupt the game
+    def show_mine(self, end_game = True):
         self.btn_object.configure(bg='red')
         self.btn_object.configure(state='disabled')
+
+        ctypes.windll.user32.MessageBoxW(
+                0, 'You clicked on a mine', 'Game over', 0)
+        sys.exit()
 
     def get_cell_by_axes(self, x, y):
         for cell in Cell.all:
@@ -87,26 +97,28 @@ class Cell:
         return count
 
     def show_cell(self):
-        Cell.cell_count -= 1
-        self.is_shown = True
-        self.btn_object.configure(text=self.surrounding_mines_count)
-        if Cell.counter_object:
-            Cell.counter_object.configure(
-                text=f"Cells Left: {Cell.cell_count}")
+        if self.is_shown == False:
+            Cell.cell_count -= 1
+            self.is_shown = True
+            self.btn_object.configure(text=self.surrounding_mines_count)
+            if Cell.counter_object:
+                Cell.counter_object.configure(
+                    text=f"Cells Left: {Cell.cell_count}")
 
     def onRightClick(self, event):
-        if not self.is_marked:
-            self.btn_object.configure(
-                bg='orange'
-            )
-            self.btn_object.configure(state='disabled')
-            self.is_marked = True
-        else:            
-            self.btn_object.configure(
-                bg='SystemButtonFace'
-            )
-            self.btn_object.configure(state='active')
-            self.is_marked = False
+        if not self.is_shown:
+            if not self.is_marked:
+                self.btn_object.configure(
+                    bg='orange'
+                )
+                self.btn_object.configure(state='disabled')
+                self.is_marked = True
+            else:            
+                self.btn_object.configure(
+                    bg='SystemButtonFace'
+                )
+                self.btn_object.configure(state='active')
+                self.is_marked = False
 
     @staticmethod
     def generate_mines():

@@ -26,7 +26,7 @@ game_title = Label(
     font=('', 36)
 )
 
-game_title.place(x=utils.width_prct(25), y=utils.height_prct(25))
+game_title.place(x=utils.width_prct(25), y=0)
 
 left_frame = Frame(
     root,
